@@ -54,7 +54,7 @@ void massimo_negativi(int **mat, int n, int m, int *vett, int k, int *max, int *
         }
 
         if (trovato) {
-            *neg += 1;
+            (*neg)++;
         }
     }
 }
@@ -71,16 +71,11 @@ int main(void){
     }
 
 
-    /* Se volessi copiare la matrice statica in una dinamica, in modo da passarla al metodo come int **mat.
+    /* Posso fare da ponte tra la matrice statica in una dinamica, in modo da passarla al metodo come int **mat.
     In alternativa, il metodo avrebbe dovuto prendere int mat[N][M] */
-    int **new_mat = (int **) malloc(N * sizeof(int *));
+    int **ptr_mat = (int **) malloc(N * sizeof(int *));
     for (int i = 0; i < N; i++) {
-        new_mat[i] = (int *) malloc(M * sizeof(int));
-    }
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < M; j++) {
-            new_mat[i][j] = mat[i][j];
-        }
+        ptr_mat[i] = mat[i];
     }
 
 
@@ -97,7 +92,7 @@ int main(void){
     // Chiamata al metodo e terminazione programma
     int max;
     int neg;
-    massimo_negativi(new_mat, N, M, vett, k, &max, &neg);
+    massimo_negativi(ptr_mat, N, M, vett, k, &max, &neg);
     printf("max=%d, neg=%d\n", max, neg);
 
     return 0;
