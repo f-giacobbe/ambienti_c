@@ -105,7 +105,7 @@ void verifica_vet_matrice(int** M, int n, int m, int* V, int dimV, int K, int* c
 }
 
 int** create(int n, int m) {
-    int i;
+    int i, j;
     int** M;
 
     M = (int**) malloc(n * sizeof(int*));
@@ -117,6 +117,12 @@ int** create(int n, int m) {
         M[i] = (int*) malloc(m * sizeof(int));
         if (M[i] == NULL) {
             printf("Errore allocazione memoria\n");
+            for (j = 0; j < i; j++) {
+                free(M[j]);
+                M[j] = NULL;
+            }
+            free(M);
+            M = NULL;
             exit(1);
         }
     }
